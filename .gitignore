@@ -1,3 +1,4 @@
 .env
 db.sqlite3
 ReservaHospedagemApp/_pycache_/*
+core/_pycache_/*
