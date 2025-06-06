@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    Lista de Anfitrioes - {{ block.super }}
+
+{% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+        <br />
+        <h5><b>Lista de Anfitrioes</b></h5>
+        <div class="row">
+            <div class ="col-md-12">
+                <br />
+                    <a href="{% url 'anfitrioes:add_anfitrioes' %}">Cadastro de Anfitrioes</a>
+                <br />
+                <br />
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Senha</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Biografia</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for anfitriao in anfitrioes %}
+                        <tr>
+                            <th scope="row">{{ anfitriao.id }}</th>
+                            <td>{{ anfitriao.name }}</td>
+                            <td>{{ anfitriao.email }}</td>
+                            <td>{{ anfitriao.password }}</td>
+                            <td>{{ anfitriao.telephone }}</td>
+                            <td>{{ anfitriao.biography }}</td>
+                            <td>
+                                <a href="{% url 'anfitrioes:edit_anfitrioes' anfitriao.id %}" class="btn btn-primary btn-sm">Editar</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'anfitrioes:delete_anfitrioes' anfitriao.id %}" class="btn btn-danger btn-sm ">Excluir</a>
+                            </td>
+                        </tr> 
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
