@@ -17,6 +17,14 @@ def add_anfitrioes(request):
     return render(request, template_name, context)
 
 
+def list_anfitrioes(request):
+    template_name = 'anfitrioes/list_anfitrioes.html'
+    anfitrioes = Anfitriao.objects.filter()
+    context = {
+        'anfitrioes': anfitrioes
+    }
+    return render(request, template_name, context)
+
 def edit_anfitrioes(request, id_anfitriao):
     template_name = 'anfitrioes/add_anfitrioes.html'
     context ={}
@@ -30,10 +38,9 @@ def edit_anfitrioes(request, id_anfitriao):
     context['form'] = form
     return render(request, template_name, context)
 
-def list_anfitrioes(request):
-    template_name = 'anfitrioes/list_anfitrioes.html'
-    categories = Anfitriao.objects.filter()
-    context = {
-        'anfitrioes': anfitrioes
-    }
-    return render(request, template_name, context)
+
+
+def delete_anfitrioes(request, id_anfitriao):
+    anfitriao = anfitriao.objects.get(id=id_anfitriao)
+    anfitriao.delete()
+    return redirect('anfitrioes:list_anfitrioes')
