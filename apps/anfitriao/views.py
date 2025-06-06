@@ -11,7 +11,7 @@ def add_anfitrioes(request):
             f = form.save(commit=False)
             f.save()
             form.save_m2m()
-            return redirect('core:home')
+            return redirect('anfitrioes/list_anfitrioes.html')
     form = AnfitriaoForm()
     context['form'] = form
     return render(request, template_name, context)
@@ -28,7 +28,7 @@ def list_anfitrioes(request):
 def edit_anfitrioes(request, id_anfitriao):
     template_name = 'anfitrioes/add_anfitrioes.html'
     context ={}
-    anfitriao = get_object_or_404(anfitriao, id=id_anfitriao)
+    anfitriao = get_object_or_404(Anfitriao, id=id_anfitriao)
     if request.method == 'POST':
         form = AnfitriaoForm(request.POST, instance=anfitriao)
         if form.is_valid():
@@ -41,6 +41,6 @@ def edit_anfitrioes(request, id_anfitriao):
 
 
 def delete_anfitrioes(request, id_anfitriao):
-    anfitriao = anfitriao.objects.get(id=id_anfitriao)
+    anfitriao = Anfitriao.objects.get(id=id_anfitriao)
     anfitriao.delete()
     return redirect('anfitrioes:list_anfitrioes')
