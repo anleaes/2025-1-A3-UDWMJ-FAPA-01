@@ -6,20 +6,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/arquivo_com_estilos.css' %}">
-    <title>{% block title %}Nome do meu App{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>{% block title %}StayEZ{% endblock title %}</title>
 </head>
 <body>
 
     {% block body %}
-        <ul>
-        <li><a href="{% url 'categories:list_categories' %}" >1</a></li>
-        <li><a href="#" >2</a></li>
-        <li><a href="#" >3</a></li>
-        <li><a href="#" >4</a></li>
-        </ul>
+    
     {% endblock body %}
     
-    <script src="{% static 'js/arquivo_com_javascript.js' %}"></script>
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>
