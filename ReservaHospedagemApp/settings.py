@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'core.apps.CoreConfig',
     'anfitriao.apps.AnfitriaoConfig',
+    'hospede.apps.HospedeConfig',
     
 ]
 
