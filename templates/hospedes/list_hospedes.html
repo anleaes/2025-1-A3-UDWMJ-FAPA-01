@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    Lista de Hospedes - {{ block.super }}
+
+{% endblock title %}
+
+{% block body %}
+
+    <div class="container">
+        <br />
+        <h5><b>Lista de Hospedes</b></h5>
+        <div class="row">
+            <div class ="col-md-12">
+                <br />
+                    <a href="{% url 'hospedes:add_hospedes' %}">Cadastro de Hospedes</a>
+                <br />
+                <br />
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Senha</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hospede in hospedes %}
+                        <tr>
+                            <th scope="row">{{ hospede.id }}</th>
+                            <td>{{ hospede.name }}</td>
+                            <td>{{ hospede.email }}</td>
+                            <td>{{ hospede.password }}</td>
+                            <td>{{ hospede.telephone }}</td>
+                            <td>{{ hospede.biography }}</td>
+                            <td>
+                                <a href="{% url 'hospedes:edit_hospedes' hospede.id %}" class="btn btn-primary btn-sm">Editar</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'hospedes:delete_hospedes' hospede.id %}" class="btn btn-danger btn-sm ">Excluir</a>
+                            </td>
+                        </tr> 
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
