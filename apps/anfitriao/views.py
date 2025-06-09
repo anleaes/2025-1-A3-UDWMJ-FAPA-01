@@ -11,7 +11,7 @@ def add_anfitrioes(request):
             f = form.save(commit=False)
             f.save()
             form.save_m2m()
-            return redirect('anfitrioes/list_anfitrioes.html')
+            return redirect('/anfitriao')
     form = AnfitriaoForm()
     context['form'] = form
     return render(request, template_name, context)
