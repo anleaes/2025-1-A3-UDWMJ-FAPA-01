@@ -43,4 +43,4 @@ def edit_hospedes(request, id_hospede):
 def delete_hospedes(request, id_hospede):
     hospede = Hospede.objects.get(id=id_hospede)
     hospede.delete()
-    return redirect('hospedes:hospedes')
+    return redirect('hospedes:list_hospedes')
