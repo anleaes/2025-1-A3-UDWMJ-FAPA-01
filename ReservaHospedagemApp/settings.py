@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'anfitriao.apps.AnfitriaoConfig',
     'hospede.apps.HospedeConfig',
+    'accounts.apps.AccountsConfig',
     
 ]
 
