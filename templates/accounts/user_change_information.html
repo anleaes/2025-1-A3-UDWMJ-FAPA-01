@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Editar Informações - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <br />
+    <h5><b>Editar Informações de Usuário</b></h5>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                    </div>
+                {% endfor %}
+                <br />
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
