@@ -8,6 +8,7 @@ core/__pycache__/*
 anfitriao/__pycache__/*
 hospede/__pycache__/*
 accounts/__pycache__/*
+imovel/__pycache__/*
 
 */migrations/
 !*/migrations/__init__.py
@@ -16,3 +17,4 @@ apps/core/migrations/*
 apps/anfitriao/migrations/*
 apps/hospede/migrations/*
 apps/accounts/migrations/*
+apps/imovel/migrations/*
