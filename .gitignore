@@ -7,6 +7,7 @@ ReservaHospedagemApp/__pycache__/*
 core/__pycache__/*
 anfitriao/__pycache__/*
 hospede/__pycache__/*
+accounts/__pycache__/*
 
 */migrations/
 !*/migrations/__init__.py
@@ -14,3 +15,4 @@ hospede/__pycache__/*
 apps/core/migrations/*
 apps/anfitriao/migrations/*
 apps/hospede/migrations/*
+apps/accounts/migrations/*
