@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Serviços Adicionais - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Serviços Adicionais</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <a href="{% url 'servico_adicional:add_servicos_adicionais' %}">Cadastro de Serviços Adicionais</a>
+                <br /><br />
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for servico in servicos_adicionais %}
+                            <tr>
+                                <th scope="row">{{ servico.id }}</th>
+                                <td>{{ servico.nome }}</td>
+                                <td>R$ {{ servico.preco }}</td>
+                                <td>
+                                    <a href="{% url 'servico_adicional:edit_servicos_adicionais' servico.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'servico_adicional:delete_servicos_adicionais' servico.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -10,6 +10,7 @@ hospede/__pycache__/*
 accounts/__pycache__/*
 imovel/__pycache__/*
 comodidade/__pycache__/*
+servico_adicional/__pycache__/*
 
 */migrations/
 !*/migrations/__init__.py
@@ -20,3 +21,4 @@ apps/hospede/migrations/*
 apps/accounts/migrations/*
 apps/imovel/migrations/*
 apps/comodidade/migrations/*
+apps/servico_adicional/migrations/*
