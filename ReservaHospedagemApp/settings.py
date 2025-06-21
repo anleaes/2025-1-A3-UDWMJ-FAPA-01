@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'hospede.apps.HospedeConfig',
     'accounts.apps.AccountsConfig',
     'imovel.apps.ImovelConfig',
+    'comodidade.apps.ComodidadeConfig',
     
 ]
 

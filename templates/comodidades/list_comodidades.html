@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Comodidades - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Comodidades</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <a href="{% url 'comodidade:add_comodidades' %}">Cadastro de Comodidades</a>
+                <br /><br />
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comodidade in comodidades %}
+                            <tr>
+                                <th scope="row">{{ comodidade.id }}</th>
+                                <td>{{ comodidade.nome }}</td>
+                                <td>{{ comodidade.descricao }}</td>
+                                <td>
+                                    <a href="{% url 'comodidade:edit_comodidades' comodidade.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'comodidade:delete_comodidades' comodidade.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
