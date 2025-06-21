@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}
+    Adicionar Imóveis - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Cadastro de Imóveis</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="{{ form.titulo.id_for_label }}">Título</label>
+                        {{ form.titulo|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+                        {{ form.descricao|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.endereco.id_for_label }}">Endereço</label>
+                        {{ form.endereco|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.preco_por_noite.id_for_label }}">Preço por noite</label>
+                        {{ form.preco_por_noite|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.max_hospedes.id_for_label }}">Máximo de Hóspedes</label>
+                        {{ form.max_hospedes|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.quartos.id_for_label }}">Quartos</label>
+                        {{ form.quartos|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.banheiros.id_for_label }}">Banheiros</label>
+                        {{ form.banheiros|add_class:"form-control" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.disponivel.id_for_label }}">Disponível</label>
+                        {{ form.disponivel|add_class:"form-check-input" }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.anfitriao.id_for_label }}">Anfitrião</label>
+                        {{ form.anfitriao|add_class:"form-control" }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

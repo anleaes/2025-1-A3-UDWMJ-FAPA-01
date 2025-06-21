@@ -3,7 +3,7 @@ from .models import Imovel
 from .forms import ImovelForm
 
 def add_imoveis(request):
-    template_name = 'imovel/add_imoveis.html'
+    template_name = 'imoveis/add_imoveis.html'
     context = {}
     if request.method == 'POST':
         form = ImovelForm(request.POST)
@@ -18,7 +18,7 @@ def add_imoveis(request):
 
 
 def list_imoveis(request):
-    template_name = 'imovel/list_imoveis.html'
+    template_name = 'imoveis/list_imoveis.html'
     imoveis = Imovel.objects.all()
     context = {
         'imoveis': imoveis
@@ -27,7 +27,7 @@ def list_imoveis(request):
 
 
 def edit_imoveis(request, id_imovel):
-    template_name = 'imovel/add_imoveis.html'
+    template_name = 'imoveis/add_imoveis.html'
     context = {}
     imovel = get_object_or_404(Imovel, id=id_imovel)
     if request.method == 'POST':
