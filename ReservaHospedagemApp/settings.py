@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'imovel.apps.ImovelConfig',
     'comodidade.apps.ComodidadeConfig',
+    'servico_adicional.apps.ServicoAdicionalConfig',
     
 ]
 
