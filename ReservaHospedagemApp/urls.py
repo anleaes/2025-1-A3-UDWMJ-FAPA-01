@@ -27,6 +27,7 @@ urlpatterns = [
     path('contas/', include('accounts.urls', namespace='accounts')),
     path('imovel/', include('imovel.urls', namespace='imovel')),
     path('comodidade/', include('comodidade.urls', namespace='comodidade')),
+     path('servico_adicional/', include('servico_adicional.urls', namespace='servico_adicional')),
 
 ]
 
