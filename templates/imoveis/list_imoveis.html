@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Imóveis - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Imóveis</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <a href="{% url 'imovel:add_imoveis' %}">Cadastro de Imóveis</a>
+                <br /><br />
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Endereço</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Máx. Hóspedes</th>
+                            <th scope="col">Quartos</th>
+                            <th scope="col">Banheiros</th>
+                            <th scope="col">Anfitrião</th>
+                            <th scope="col">Disponível</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for imovel in imoveis %}
+                            <tr>
+                                <th scope="row">{{ imovel.id }}</th>
+                                <td>{{ imovel.titulo }}</td>
+                                <td>{{ imovel.descricao }}</td>
+                                <td>{{ imovel.endereco}}</td>
+                                <td>R$ {{ imovel.preco_por_noite }}</td>
+                                <td>{{ imovel.max_hospedes }}</td>
+                                <td>{{ imovel.quartos }}</td>
+                                <td>{{ imovel.banheiros }}</td>
+                                <td>{{ imovel.anfitriao.name }}</td>
+                                <td>{% if imovel.disponivel %}Dispoivel{% else %}indisponivel{% endif %}</td>
+                                <td>
+                                    <a href="{% url 'imovel:edit_imoveis' imovel.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'imovel:delete_imoveis' imovel.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
