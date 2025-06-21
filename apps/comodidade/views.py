@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Comodidade
 from .forms import ComodidadeForm
 
-def add_comodidade(request):
+def add_comodidades(request):
     template_name = 'comodidades/add_comodidade.html'
     context = {}
     if request.method == 'POST':
@@ -24,7 +24,7 @@ def list_comodidades(request):
     }
     return render(request, template_name, context)
 
-def edit_comodidade(request, id_comodidade):
+def edit_comodidades(request, id_comodidade):
     template_name = 'comodidades/add_comodidade.html'
     context = {}
     comodidade = get_object_or_404(Comodidade, id=id_comodidade) 
@@ -37,7 +37,7 @@ def edit_comodidade(request, id_comodidade):
     context['form'] = form
     return render(request, template_name, context)
 
-def delete_comodidade(request, id_comodidade):
+def delete_comodidades(request, id_comodidade):
     comodidade = Comodidade.objects.get(id=id_comodidade) 
     comodidade.delete()
     return redirect('comodidade:list_comodidades')
