@@ -3,7 +3,7 @@ from .models import Comodidade
 from .forms import ComodidadeForm
 
 def add_comodidades(request):
-    template_name = 'comodidades/add_comodidade.html'
+    template_name = 'comodidades/add_comodidades.html'
     context = {}
     if request.method == 'POST':
         form = ComodidadeForm(request.POST)
@@ -25,7 +25,7 @@ def list_comodidades(request):
     return render(request, template_name, context)
 
 def edit_comodidades(request, id_comodidade):
-    template_name = 'comodidades/add_comodidade.html'
+    template_name = 'comodidades/add_comodidades.html'
     context = {}
     comodidade = get_object_or_404(Comodidade, id=id_comodidade) 
     if request.method == 'POST':

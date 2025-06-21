@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <br />
-                <a href="{% url 'comodidade:add_comodidade' %}">Cadastro de Comodidades</a>
+                <a href="{% url 'comodidade:add_comodidades' %}">Cadastro de Comodidades</a>
                 <br /><br />
                 <table class="table table-hover">
                     <thead>
@@ -30,10 +30,10 @@
                                 <td>{{ comodidade.nome }}</td>
                                 <td>{{ comodidade.descricao }}</td>
                                 <td>
-                                    <a href="{% url 'comodidade:edit_comodidade' comodidade.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{% url 'comodidade:edit_comodidades' comodidade.id %}" class="btn btn-primary btn-sm">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'comodidade:delete_comodidade' comodidade.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                    <a href="{% url 'comodidade:delete_comodidades' comodidade.id %}" class="btn btn-danger btn-sm">Excluir</a>
                                 </td>
                             </tr>
                         {% endfor %}
