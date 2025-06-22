@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Reservas - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Reservas</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <a href="{% url 'reserva:add_reservas' %}" class="btn btn-success mb-3">Cadastrar Nova Reserva</a>
+                
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Hóspede</th>
+                            <th scope="col">Imóvel</th>
+                            <th scope="col">Check-in</th>
+                            <th scope="col">Check-out</th>
+                            <th scope="col">Hóspedes</th>
+                            <th scope="col">Preço Total</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Criado Em</th>
+                            <th scope="col">Atualizado Em</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reserva in reservas %}
+                            <tr>
+                                <th scope="row">{{ reserva.id }}</th>
+                                <td>{{ reserva.hospede.name }}</td>
+                                <td>{{ reserva.imovel.titulo }}</td>
+                                <td>{{ reserva.data_checkin|date:"d/m/Y" }}</td>
+                                <td>{{ reserva.data_checkout|date:"d/m/Y" }}</td>
+                                <td>{{ reserva.qtd_hospedes }}</td>
+                                <td>R$ {{ reserva.preco_total|floatformat:2 }}</td>
+                                <td>{{ reserva.get_status_display }}</td>
+                                <td>{{ reserva.criado_em|date:"d/m/Y H:i" }}</td>
+                                <td>{{ reserva.atualizado_em|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'reserva:edit_reservas' reserva.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                    
+                                    {% if reserva.status != 'cancelada' and reserva.status != 'concluida' %}
+                                        <a href="{% url 'reserva:cancelar_reserva' reserva.id %}" class="btn btn-warning btn-sm">Cancelar</a>
+                                    {% else %}
+                                        <button class="btn btn-secondary btn-sm" disabled>Cancelado</button>
+                                    {% endif %}
+
+                                    <a href="{% url 'reserva:delete_reservas' reserva.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
