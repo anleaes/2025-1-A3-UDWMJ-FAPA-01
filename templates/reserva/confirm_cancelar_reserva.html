@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Cancelar Reserva - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Confirmar Cancelamento de Reserva</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <p>Você tem certeza que deseja cancelar a reserva {{ reserva.id }}?</p>
+                <p>Detalhes da Reserva:</p>
+                <ul>
+                    <li>Imóvel: {{ reserva.imovel.titulo }}</li>
+                    <li>Hóspede: {{ reserva.hospede.name }}</li>
+                    <li>Período: {{ reserva.data_checkin|date:"d/m/Y" }} a {{ reserva.data_checkout|date:"d/m/Y" }}</li>
+                    <li>Status Atual: {{ reserva.get_status_display }}</li>
+                </ul>
+
+                <form method="POST" action="{% url 'reserva:cancelar_reserva' reserva.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Sim, Cancelar Reserva</button>
+                    <a href="{% url 'reserva:list_reservas' %}" class="btn btn-secondary">Não, Voltar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
