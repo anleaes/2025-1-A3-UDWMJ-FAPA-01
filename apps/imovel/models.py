@@ -19,12 +19,22 @@ class Imovel(models.Model):
         return self.titulo
 
 
-#Apos reserva estar implementado testar funcionamento dessa funcao
+    def is_available(self, checkin_date: date, checkout_date: date, current_reserva_id=None) -> bool:
+     
+        if not self.disponivel: 
+            return False
 
-    # def is_available(self, checkin: date, checkout: date) -> bool:
-    #     reservas_existentes = self.reserva_set.filter(
-    #         status='confirmada',
-    #         data_checkout__gt=checkin, #gt maior que
-    #         data_checkin__lt=checkout #lt menor que
-    #     )
-    #     return not reservas_existentes.exists() 
+        from reserva.models import Reserva 
+
+        conflicting_reservas = Reserva.objects.filter(
+            imovel=self,
+            status__in=['solicitada', 'confirmada'] 
+        ).filter(
+            data_checkin__lt=checkout_date,
+            data_checkout__gt=checkin_date
+        )
+
+        if current_reserva_id:
+            conflicting_reservas = conflicting_reservas.exclude(id=current_reserva_id)
+
+        return not conflicting_reservas.exists()

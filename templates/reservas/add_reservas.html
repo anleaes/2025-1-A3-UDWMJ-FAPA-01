@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Reserva - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Cadastro de Reserva</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.hospede.id_for_label }}">Hóspede</label>
+                        {{ form.hospede|add_class:"form-control" }}
+                        {% for error in form.hospede.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.imovel.id_for_label }}">Imóvel</label>
+                        {{ form.imovel|add_class:"form-control" }}
+                        {% for error in form.imovel.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.data_checkin.id_for_label }}">Data de Check-in</label>
+                        {{ form.data_checkin|add_class:"form-control" }}
+                        {% for error in form.data_checkin.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.data_checkout.id_for_label }}">Data de Check-out</label>
+                        {{ form.data_checkout|add_class:"form-control" }}
+                        {% for error in form.data_checkout.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.qtd_hospedes.id_for_label }}">Quantidade de Hóspedes</label>
+                        {{ form.qtd_hospedes|add_class:"form-control" }}
+                        {% for error in form.qtd_hospedes.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.status.id_for_label }}">Status</label>
+                        {{ form.status|add_class:"form-control" }}
+                        {% for error in form.status.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="{% url 'reserva:list_reservas' %}" class="btn btn-secondary">Voltar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
