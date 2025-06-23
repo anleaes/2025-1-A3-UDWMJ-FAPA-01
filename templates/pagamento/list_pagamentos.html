@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Pagamentos - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Pagamentos</b></h5>
+        <br />
+        <a href="{% url 'pagamento:add_pagamento' %}" class="btn btn-success mb-3">Registrar Novo Pagamento</a>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Reserva (Imóvel)</th>
+                            <th scope="col">Hóspede</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Método</th> 
+                            <th scope="col">Status</th>
+                            <th scope="col">Data Pagamento</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pagamento in pagamentos %}
+                            <tr>
+                                <th scope="row">{{ pagamento.id }}</th>
+                                <td>Reserva {{ pagamento.reserva.id }} ({{ pagamento.reserva.imovel.titulo }})</td>
+                                <td>{{ pagamento.reserva.hospede.name }}</td>
+                                <td>R$ {{ pagamento.valor|floatformat:2 }}</td>
+                                <td>{{ pagamento.get_metodo_display }}</td> 
+                                <td>{{ pagamento.get_status_display }}</td>
+                                <td>{{ pagamento.data_pagamento|date:"d/m/Y" }}</td>
+                                <td>
+                                    <a href="{% url 'pagamento:edit_pagamento' pagamento.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{% url 'pagamento:delete_pagamento' pagamento.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

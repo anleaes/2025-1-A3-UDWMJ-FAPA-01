@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'comodidade_imovel.apps.ComodidadeImovelConfig',
     'item_reserva.apps.ItemReservaConfig',
     'avaliacao.apps.AvaliacaoConfig',
+    'pagamento.apps.PagamentoConfig',
     
 ]
 
