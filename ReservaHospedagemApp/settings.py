@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'servico_adicional.apps.ServicoAdicionalConfig',
     'reserva.apps.ReservaConfig',
     'comodidade_imovel.apps.ComodidadeImovelConfig',
+    'item_reserva.apps.ItemReservaConfig'
     
 ]
 
