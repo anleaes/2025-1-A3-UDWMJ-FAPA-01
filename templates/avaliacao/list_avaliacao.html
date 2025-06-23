@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Avaliações - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Avaliações</b></h5>
+        <br />
+        <a href="{% url 'avaliacao:add_avaliacao' %}" class="btn btn-success mb-3">Adicionar Nova Avaliação</a>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Reserva (Imóvel)</th>
+                            <th scope="col">Hóspede</th>
+                            <th scope="col">Nota</th>
+                            <th scope="col">Comentário</th>
+                            <th scope="col">Criado Em</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for avaliacao in avaliacoes %}
+                            <tr>
+                                <th scope="row">{{ avaliacao.id }}</th>
+                                <td>Reserva {{ avaliacao.reserva.id }} ({{ avaliacao.reserva.imovel.titulo }})</td>
+                                <td>{{ avaliacao.reserva.hospede.name }}</td>
+                                <td>{{ avaliacao.nota }}</td>
+                                <td>{{ avaliacao.comentario|default:"N/A" }}</td>
+                                <td>{{ avaliacao.criado_em|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'avaliacao:edit_avaliacao' avaliacao.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{% url 'avaliacao:delete_avaliacao' avaliacao.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
