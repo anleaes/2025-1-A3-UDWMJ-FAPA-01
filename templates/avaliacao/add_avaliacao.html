@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Avaliação - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Cadastrar Avaliação</b></h5>
+        {% if reserva_associada %}
+            <p>Avaliando a Reserva: <strong>{{ reserva_associada.id }} - {{ reserva_associada.imovel.titulo }}</strong></p>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="{{ form.reserva.id_for_label }}">Reserva</label>
+                        {{ form.reserva|add_class:"form-control" }}
+                        {% for error in form.reserva.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.nota.id_for_label }}">Nota (1-5)</label>
+                        {{ form.nota|add_class:"form-control" }}
+                        {% for error in form.nota.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.comentario.id_for_label }}">Comentário</label>
+                        {{ form.comentario|add_class:"form-control" }}
+                        {% for error in form.comentario.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="{% url 'avaliacao:list_avaliacoes' %}" class="btn btn-secondary">Voltar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
