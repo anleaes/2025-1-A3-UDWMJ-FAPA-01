@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista de Comodidades do Imóvel - {{ block.super }}
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <br />
+        <h5><b>Lista de Comodidades do Imóvel</b></h5>
+        <div class="row">
+            <div class="col-md-12">
+                <br />
+                <a href="{% url 'comodidade_imovel:add_comodidade_imovel' %}" class="btn btn-success mb-3">Associar Nova Comodidade a Imóvel</a>
+                
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Comodidade</th>
+                            <th scope="col">Imóvel</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ci in comodidades_imoveis %}
+                            <tr>
+                                <th scope="row">{{ ci.id }}</th>
+                                <td>{{ ci.comodidade.nome }}</td>
+                                <td>{{ ci.imovel.titulo }}</td>
+                                <td>
+                                    <a href="{% url 'comodidade_imovel:edit_comodidade_imovel' ci.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{% url 'comodidade_imovel:delete_comodidade_imovel' ci.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
