@@ -13,6 +13,7 @@ comodidade/__pycache__/*
 servico_adicional/__pycache__/*
 reserva/__pycache__/*
 comodidade_imovel/__pycache__/*
+item_reserva/__pycache__/*
 
 
 */migrations/
@@ -27,3 +28,4 @@ apps/comodidade/migrations/*
 apps/servico_adicional/migrations/*
 apps/reserva/migrations/*
 apps/comodidade_imovel/migrations/*
+apps/item_reserva/migrations/*
