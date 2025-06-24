@@ -69,11 +69,108 @@
                             <small class="text-danger">{{ error }}</small>
                         {% endfor %}
                     </div>
+
+                    <hr>
+                    <h5><b>Serviços Adicionais (Carrinho)</b></h5>
+                    <div id="formset-container">
+                        {% comment %} formsert.management_form renderiza alguns campos oculto da bibilioteca django como TOTAL_FORMS {% endcomment %}
+                        {{ formset.management_form }} 
+
+                        {% for form_item in formset %}
+                            <div class="formset-row mb-3 p-3 border rounded">
+                                {% if form_item.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {% for error in form_item.non_field_errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="{{ form_item.servico_adicional.id_for_label }}">Serviço</label>
+                                            {{ form_item.servico_adicional|add_class:"form-control" }}
+                                            {% for error in form_item.servico_adicional.errors %}
+                                                <small class="text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="{{ form_item.quantidade.id_for_label }}">Quantidade</label>
+                                            {{ form_item.quantidade|add_class:"form-control" }}
+                                            {% for error in form_item.quantidade.errors %}
+                                                <small class="text-danger">{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-end">
+                                        {% if form_item.instance.pk %}
+                                            <div class="form-check">
+                                                {{ form_item.DELETE }}
+                                                <label class="form-check-label" for="{{ form_item.DELETE.id_for_label }}">Remover</label>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if form_item.id %} {{ form_item.id }} {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-info btn-sm mb-3" id="add-item-form">Adicionar Outro Serviço</button>
+                    <br>
                     
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Reserva e Itens</button>
                     <a href="{% url 'reserva:list_reservas' %}" class="btn btn-secondary">Voltar</a>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addItemButton = document.getElementById('add-item-form'); //botão adcionar servico
+            const formsetContainer = document.getElementById('formset-container'); //div do "carrinho"
+            let totalForms = document.querySelector('input[name="itens-TOTAL_FORMS"]');
+
+            //Nota sobre previx: É uma palavra-chave que será substituída pelo índice correto de formulário
+            let formTemplate = `
+                <div class="formset-row mb-3 p-3 border rounded">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Serviço</label>
+                                <select name="itens-__prefix__-servico_adicional" class="form-control" id="id_itens-__prefix__-servico_adicional">
+                                    {% for value, text in formset.empty_form.servico_adicional.field.choices %}
+                                        <option value="{{ value }}">{{ text }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Quantidade</label>
+                                <input type="number" name="itens-__prefix__-quantidade" value="1" min="1" class="form-control" id="id_itens-__prefix__-quantidade">
+                            </div>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <div class="form-check">
+                                <input type="checkbox" name="itens-__prefix__-DELETE" id="id_itens-__prefix__-DELETE" class="form-check-input">
+                                <label class="form-check-label" for="id_itens-__prefix__-DELETE">Remover</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            addItemButton.addEventListener('click', function() {
+                const currentForms = parseInt(totalForms.value); // Conta quantos formulários existem
+                const newFormHtml = formTemplate.replace(/__prefix__/g, currentForms); // Cria novo HTML com índice correto atualizado 
+                formsetContainer.insertAdjacentHTML('beforeend', newFormHtml); // Insere no HTML da página
+                totalForms.value = currentForms + 1; // Atualiza o número total de formulários
+            });
+        });
+    </script>
 {% endblock body %}

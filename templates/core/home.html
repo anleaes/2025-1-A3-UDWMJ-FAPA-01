@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    Página Inicial
-{% endblock title %}
+{% block title %}Página Inicial{% endblock %}
 
 {% block body %}
-    <h1>Bem-vindo ao StayEZ!</h1>
-    <p>Veja nossos imóveis disponíveis para reserva:</p>
-{% endblock body %}
+<div class="text-center">
+    <h1 class="mb-3">Bem-vindo ao StayEZ!</h1>
+    <p class="lead">Veja nossos imóveis disponíveis para reserva:</p>
+    <a class="btn btn-primary mt-3" href="{% url 'imovel:list_imoveis' %}">
+        <i class="bi bi-house-door"></i> Ver Imóveis
+    </a>
+</div>
+{% endblock %}

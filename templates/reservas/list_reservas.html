@@ -22,6 +22,7 @@
                             <th scope="col">Check-in</th>
                             <th scope="col">Check-out</th>
                             <th scope="col">Hóspedes</th>
+                            <th scope="col">Serviços Adicionais</th>
                             <th scope="col">Preço Total</th>
                             <th scope="col">Status</th>
                             <th scope="col">Criado Em</th>
@@ -38,6 +39,17 @@
                                 <td>{{ reserva.data_checkin|date:"d/m/Y" }}</td>
                                 <td>{{ reserva.data_checkout|date:"d/m/Y" }}</td>
                                 <td>{{ reserva.qtd_hospedes }}</td>
+                                <td>
+                                    {% if reserva.itens_reserva.all %}
+                                        <ul>
+                                            {% for item in reserva.itens_reserva.all %}
+                                                <li>{{ item.servico_adicional.nome }} ({{ item.quantidade }}x) - R$ {{ item.calcular_subtotal|floatformat:2 }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        Nenhum serviço extra.
+                                    {% endif %}
+                                </td>
                                 <td>R$ {{ reserva.preco_total|floatformat:2 }}</td>
                                 <td>{{ reserva.get_status_display }}</td>
                                 <td>{{ reserva.criado_em|date:"d/m/Y H:i" }}</td>

@@ -4,17 +4,28 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Sistema de Imóveis{% endblock title %}</title>
+    <title>{% block title %}StayEZ - Sistema de Hospedagem{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
         .menu-button {
-            background-color: #f1f1f1;
+            background-color: #f8f9fa;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -25,51 +36,80 @@
             right: 0;
             left: auto;
         }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link i {
+            margin-right: 6px;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container d-flex justify-content-between align-items-center w-100">
-            <a class="navbar-brand font-weight-bold" href="/">StayEZ</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">StayEZ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="d-flex align-items-center">
-                {% if request.user.is_authenticated %}
-                    <div class="dropdown">
-                        <button class="menu-button dropdown-toggle" type="button" id="menuDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="bi bi-list" style="font-size: 1.2rem;"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right mt-2 shadow" aria-labelledby="menuDropdown">
-                            <a class="dropdown-item" href="#">Central de Ajuda</a>
-                            <div class="dropdown-divider"></div>
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'anfitrioes:list_anfitrioes' %}"><i class="bi bi-person-badge"></i> Anfitriões</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospedes:list_hospedes' %}"><i class="bi bi-people"></i> Hóspedes</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'imovel:list_imoveis' %}"><i class="bi bi-house-door"></i> Imóveis</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'comodidade:list_comodidades' %}"><i class="bi bi-puzzle"></i> Comodidades</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'comodidade_imovel:list_comodidade_imovel' %}"><i class="bi bi-boxes"></i> Comodidade-Imóvel</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'reserva:list_reservas' %}"><i class="bi bi-calendar-check"></i> Reservas</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'servico_adicional:list_servicos_adicionais' %}"><i class="bi bi-tools"></i> Serviços</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'avaliacao:list_avaliacoes' %}"><i class="bi bi-star"></i> Avaliações</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'pagamento:list_pagamentos' %}"><i class="bi bi-credit-card"></i> Pagamentos</a></li>
+            </ul>
+
+            <div class="ms-auto dropdown">
+                <button class="menu-button dropdown-toggle" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end mt-2 shadow" aria-labelledby="menuDropdown">
+                    <li><a class="dropdown-item" href="#">Central de Ajuda</a></li>
+                    <li><hr class="dropdown-divider"></li>
+
+                    {% if request.user.is_authenticated %}
+                        <li>
                             <a class="dropdown-item" href="#">
                                 <strong>Perfil</strong><br>
                                 <small>{{ request.user.username }}</small>
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Carrinho</a>
-                            <a class="dropdown-item text-danger" href="{% url 'accounts:user_logout' %}">Sair</a>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="dropdown">
-                        <button class="menu-button dropdown-toggle" type="button" id="menuDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="bi bi-list" style="font-size: 1.2rem;"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right mt-2 shadow" aria-labelledby="menuDropdown">
-                            <a class="dropdown-item" href="#">Central de Ajuda</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'accounts:user_login' %}">Entrar</a>
-                            <a class="dropdown-item" href="{% url 'accounts:add_user' %}">Cadastrar-se</a>
-                        </div>
-                    </div>
-                {% endif %}
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'accounts:user_logout' %}">Sair</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{% url 'accounts:user_login' %}">Entrar</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:add_user' %}">Cadastrar-se</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
-    </nav>
-
-    <div class="container mt-4">
-        {% block body %}
-        {% endblock body %}
     </div>
+</nav>
+
+<main class="container mt-4">
+    {% block body %}
+    {% endblock body %}
+</main>
+
+<footer>
+    <p class="text-muted">&copy; {{ now|date:"Y" }} StayEZ • Sistema de Hospedagem</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -30,23 +30,33 @@ class Reserva(models.Model):
         return f"Reserva {self.id} - {self.imovel.titulo} ({self.data_checkin} a {self.data_checkout})"
 
     def calcular_preco_total(self) -> float:
-
-        if self.data_checkin and self.data_checkout and self.imovel and self.imovel.preco_por_noite is not None:
+        num_noites = 0
+        if self.data_checkin and self.data_checkout and self.imovel:
             num_noites = (self.data_checkout - self.data_checkin).days
-            
-            if num_noites > 0:
-                self.preco_total = num_noites * self.imovel.preco_por_noite
-            else:
-                self.preco_total = 0.00 # Se checkin >= checkout, o valor é zero
-        else:
-            self.preco_total = 0.00 # Se faltar dados, o preço é zero
+            if num_noites <= 0:
+                num_noites = 0
 
+        preco_base_imovel = 0.00
+        if self.imovel and self.imovel.preco_por_noite is not None:
+            preco_base_imovel = num_noites * self.imovel.preco_por_noite
+
+        total_servicos_adicionais = 0.00
+        if self.pk:  # Só tenta acessar os itens se a reserva já tem ID
+            total_servicos_adicionais = sum(
+                item.calcular_subtotal() for item in self.itens_reserva.all() #Metodo calcular_subtotal vem de item_reservas.
+            )
+
+        self.preco_total = preco_base_imovel + total_servicos_adicionais
         return self.preco_total
 
-    def cancelar(self) -> bool: 
-       
+    def cancelar(self) -> bool:
         if self.status not in ['cancelada', 'concluida']:
             self.status = 'cancelada'
             self.save(update_fields=['status', 'atualizado_em'])
             return True
         return False
+
+    def save(self, *args, **kwargs): #argumentos
+        super().save(*args, **kwargs)  #salva no banco de dados
+        self.calcular_preco_total()   # acessa
+        super().save(update_fields=['preco_total', 'atualizado_em'])  # salva Atualizando só o necessário

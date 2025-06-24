@@ -1,8 +1,11 @@
 from django import forms
+from django.forms import inlineformset_factory
 from .models import Reserva
-from imovel.models import Imovel 
-from django.core.exceptions import ValidationError
+from imovel.models import Imovel
+from item_reserva.models import ItemReserva 
+from item_reserva.forms import ItemReservaForm 
 from datetime import date
+from django.core.exceptions import ValidationError
 
 class ReservaForm(forms.ModelForm):
     class Meta:
@@ -20,7 +23,8 @@ class ReservaForm(forms.ModelForm):
             'data_checkout': forms.DateInput(attrs={'type': 'date'}),
         }
 
-    def clean(self): # validação de um formulário
+    # Método clean() serve para validar
+    def clean(self):
         cleaned_data = super().clean()
         data_checkin = cleaned_data.get('data_checkin')
         data_checkout = cleaned_data.get('data_checkout')
@@ -28,32 +32,41 @@ class ReservaForm(forms.ModelForm):
         qtd_hospedes = cleaned_data.get('qtd_hospedes')
         status_atual = cleaned_data.get('status')
 
-        # Data de Check-out deve ser posterior à Data de Check-in
-        if data_checkin and data_checkout:
+        if data_checkin and data_checkout: #Se a data de check-out é maior que a de check-in.
             if data_checkout <= data_checkin:
                 raise ValidationError(
                     "A data de check-out deve ser posterior à data de check-in."
                 )
             
-            # Data de Check-in não pode ser no passado (apenas para novas reservas)
-            if not self.instance.pk and data_checkin < date.today():
+            if not self.instance.pk and data_checkin < date.today(): #Se a data de check-in para novas reservas não está no passado.
                  raise ValidationError(
                     "A data de check-in não pode ser no passado para uma nova reserva."
                 )
 
-        # Quantidade de Hóspedes não pode exceder o máximo do imóvel
-        if imovel and qtd_hospedes:
-            if qtd_hospedes > imovel.max_hospedes: 
+        if imovel and qtd_hospedes: #Se a quantidade de hospedes não ultrapassa o limite do imóvel.
+            if qtd_hospedes > imovel.max_hospedes:
                 raise ValidationError(
                     {'qtd_hospedes': f"O número de hóspedes ({qtd_hospedes}) excede o máximo permitido pelo imóvel ({imovel.max_hospedes})."}
                 )
 
-        #  Disponibilidade do Imóvel
-        if imovel and data_checkin and data_checkout:
+        if imovel and data_checkin and data_checkout: #Se o imovel esta disponivel pois pode haver outra reserva conflitante.
             if status_atual in ['solicitada', 'confirmada']:
-                if not imovel.is_available(data_checkin, data_checkout, self.instance.pk): # Chamada ao is_available aqui
+                current_reserva_id = self.instance.pk if self.instance else None
+                if not imovel.is_available(data_checkin, data_checkout, current_reserva_id):
                     raise ValidationError(
                         "O imóvel não está disponível para as datas selecionadas. Há outra reserva conflitante."
                     )
         
         return cleaned_data
+
+
+#Forms para fazer ligação com ItemReserva para a logica do carrinho
+ItemReservaFormSet = inlineformset_factory(
+    Reserva, 
+    ItemReserva, 
+    form=ItemReservaForm, 
+    extra=1, 
+    can_delete=True, 
+    min_num=0, 
+    validate_min=False, #permite que campo serviço nao precise de um item obrigatorio
+)
